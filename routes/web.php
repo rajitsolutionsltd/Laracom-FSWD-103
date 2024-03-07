@@ -39,3 +39,5 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
 });
+
+Route::post('quick-product-view/{productId}', [HomeController::class, 'productViewModal']);

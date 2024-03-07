@@ -20,6 +20,14 @@
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('frontend_assets/css/responsive.css') }}">
 
+    <style>
+        .product-box-height {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+            gap: 2rem;
+        }
+    </style>
+
     @stack('styles')
 </head>
 
@@ -48,6 +56,8 @@
         <!-- MODAL AREA START -->
         @include('frontEnd.inc.whitelist_modal')
         <!-- MODAL AREA END -->
+
+        <div id="load_modal"></div>
 
     </div>
     <!-- Body main wrapper end -->

@@ -9,7 +9,13 @@ class Category extends Model
 {
     use HasFactory;
 
-    public static function categoryOptions(){
+    public static function categoryOptions()
+    {
         return self::pluck('name', 'id')->toArray();
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

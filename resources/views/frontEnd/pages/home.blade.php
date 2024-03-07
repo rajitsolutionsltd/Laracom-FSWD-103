@@ -19,63 +19,50 @@
                     </div>
                     <div class="tab-content">
                         @foreach ($categories as $category)
-                            <div class="tab-pane fade active show" id="categoryTab-{{ $category->id }}">
+                            <div class="tab-pane fade {{ $loop->index == 0 ? 'active show' : '' }}"
+                                id="categoryTab-{{ $category->id }}">
                                 <div class="ltn__product-tab-content-inner">
                                     <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
-                                        <!-- ltn__product-item -->
-                                        <div class="col-lg-12">
-                                            <div class="ltn__product-item ltn__product-item-3 text-center">
-                                                <div class="product-img">
-                                                    <a href="product-details.html"><img src="img/product/7.png"
-                                                            alt="#"></a>
-                                                    <div class="product-badge">
-                                                        <ul>
-                                                            <li class="sale-badge">New</li>
-                                                        </ul>
+                                        @foreach ($category->products as $product)
+                                            <div class="col-lg-12">
+                                                <div class="ltn__product-item ltn__product-item-3 text-center">
+                                                    <div class="product-img">
+                                                        <a href="product-details.html"><img
+                                                                src="{{ asset($product->image ? Storage::url($product->image) : 'assets/img/no-product-image.png') }}"
+                                                                alt="#" style="height: 250px;"></a>
+                                                        <div class="product-hover-action">
+                                                            <ul>
+                                                                <li>
+                                                                    <a title="Quick View"
+                                                                        onclick="quickProductView({{ $product->id }})">
+                                                                        <i class="far fa-eye"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" title="Add to Cart"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#add_to_cart_modal">
+                                                                        <i class="fas fa-shopping-cart"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                    <div class="product-hover-action">
-                                                        <ul>
-                                                            <li>
-                                                                <a href="#" title="Quick View" data-bs-toggle="modal"
-                                                                    data-bs-target="#quick_view_modal">
-                                                                    <i class="far fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" title="Add to Cart" data-bs-toggle="modal"
-                                                                    data-bs-target="#add_to_cart_modal">
-                                                                    <i class="fas fa-shopping-cart"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" title="Wishlist" data-bs-toggle="modal"
-                                                                    data-bs-target="#liton_wishlist_modal">
-                                                                    <i class="far fa-heart"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <div class="product-ratting">
-                                                        <ul>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star-half-alt"></i></a>
-                                                            </li>
-                                                            <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <h2 class="product-title"><a href="product-details.html">Orange Sliced
-                                                            Mix</a></h2>
-                                                    <div class="product-price">
-                                                        <span>$150.00</span>
-                                                        <del>$180.00</del>
+                                                    <div class="product-info">
+                                                        <h2 class="product-title"><a href="product-details.html">
+                                                                {{ $product->name }}
+                                                            </a></h2>
+                                                        <div class="product-price">
+                                                            <span>{{ $product->price }} .Tk</span>
+                                                        </div>
+                                                        <div class="product-in-stock">
+                                                            <strong class="text-danger me-2">In
+                                                                Stock:</strong><span>{{ $product->stock_quantity }}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!--  -->
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -87,3 +74,26 @@
     </div>
     <!-- PRODUCT TAB AREA END -->
 @endsection
+
+@push('scripts')
+    <script>
+        function quickProductView(productId) {
+            $.ajax({
+                "url": "{{ url('quick-product-view') }}/" + productId,
+                "method": "POST",
+                "dataType": 'json',
+                "data": {
+                    "_token": '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $('#load_modal').html(response.html);
+                    $('#quick_view_modal').modal('show');
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+
+            });
+        }
+    </script>
+@endpush
