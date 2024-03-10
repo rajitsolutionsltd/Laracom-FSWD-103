@@ -17,7 +17,7 @@
                         <nav>
                             <div class="ltn__main-menu">
                                 <ul>
-                                    <li><a href="contact.html">Home</a></li>
+                                    <li><a href="{{ url('/') }}">Home</a></li>
                                     <li><a href="contact.html">Contact</a></li>
                                 </ul>
                             </div>
@@ -59,8 +59,8 @@
                     <!-- mini-cart -->
                     <div class="mini-cart-icon">
                         <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
-                            <i class="icon-shopping-cart"></i>
-                            <sup>2</sup>
+                            <i class="icon-shopping-cart my-cart-icon"></i>
+                            <sup class="my-cart-badge">2</sup>
                         </a>
                     </div>
                     <!-- mini-cart -->

@@ -20,6 +20,13 @@
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('frontend_assets/css/responsive.css') }}">
 
+    <script>
+        window.App = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'baseUrl' => url('/'),
+        ]) !!};
+    </script>
+
     <style>
         .product-box-height {
             display: grid;
@@ -47,10 +54,6 @@
         <!-- Utilize Mobile Menu End -->
 
         <div class="ltn__utilize-overlay"></div>
-
-        <!-- SLIDER AREA START (slider-3) -->
-        @include('frontEnd.inc.slider')
-        <!-- SLIDER AREA END -->
 
         @yield('content')
         <!-- MODAL AREA START -->

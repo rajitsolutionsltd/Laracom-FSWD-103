@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware('auth', 'is_admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('backEnd.layouts.masters');
     });
@@ -41,3 +41,5 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::post('quick-product-view/{productId}', [HomeController::class, 'productViewModal']);
+Route::get('checkout', [HomeController::class, 'checkoutView'])->name('checkout');
+Route::post('process-checkout', [HomeController::class, 'processCheckout'])->name('proccess.checkout');

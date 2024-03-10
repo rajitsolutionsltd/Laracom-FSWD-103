@@ -48,12 +48,12 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <a href="#" class="theme-btn-1 btn btn-effect-1"
-                                                        title="Add to Cart" data-bs-toggle="modal"
-                                                        data-bs-target="#add_to_cart_modal">
+                                                    <button type="button" class="theme-btn-1 btn btn-effect-1 my-cart-btn"
+                                                        title="Add to Cart"
+                                                        >
                                                         <i class="fas fa-shopping-cart"></i>
                                                         <span>ADD TO CART</span>
-                                                    </a>
+                                                    </button>
                                                 </li>
                                             </ul>
                                         </div>

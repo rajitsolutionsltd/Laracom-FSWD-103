@@ -1,6 +1,10 @@
 @extends('frontEnd.layouts.masters')
 
 @section('content')
+    <!-- SLIDER AREA START (slider-3) -->
+    @include('frontEnd.inc.slider')
+    <!-- SLIDER AREA END -->
+
     <!-- PRODUCT TAB AREA START (product-item-3) -->
     <div class="ltn__product-tab-area ltn__product-gutter pt-85 pb-70">
         <div class="container">
@@ -38,10 +42,9 @@
                                                                         <i class="far fa-eye"></i>
                                                                     </a>
                                                                 </li>
-                                                                <li>
-                                                                    <a href="#" title="Add to Cart"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#add_to_cart_modal">
+                                                                <li class="product-item">
+                                                                    <a title="Add to Cart" class="add-to-cart-btn"
+                                                                        data-product="{{ $product }}">
                                                                         <i class="fas fa-shopping-cart"></i>
                                                                     </a>
                                                                 </li>
@@ -96,4 +99,6 @@
             });
         }
     </script>
+
+    @include('frontEnd.pages.particles.cart_script')
 @endpush

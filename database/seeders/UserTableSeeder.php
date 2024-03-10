@@ -14,8 +14,8 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            ['name' => 'Admin', 'email' => 'admin@gmail.com', 'password' => bcrypt(123456)],
-            ['name' => 'Customer', 'email' => 'customer@gmail.com', 'password' => bcrypt(123456)]
+            ['name' => 'Admin', 'email' => 'admin@gmail.com', 'password' => bcrypt(123456), 'user_type' => 'admin'],
+            ['name' => 'Customer', 'email' => 'customer@gmail.com', 'password' => bcrypt(123456), 'user_type' => 'customer']
         ];
 
         foreach ($users as $user) {
@@ -23,6 +23,7 @@ class UserTableSeeder extends Seeder
             $new_user->name = $user['name'];
             $new_user->email = $user['email'];
             $new_user->password = $user['password'];
+            $new_user->user_type = $user['user_type'];
             $new_user->save();
         }
     }

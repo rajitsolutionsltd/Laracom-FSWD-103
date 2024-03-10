@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,5 +24,19 @@ class HomeController extends Controller
             'html' => $html,
         ];
         return response()->json($response);
+    }
+
+    public function checkoutView()
+    {
+        return view('frontEnd.pages.checkout');
+    }
+
+    public function processCheckout(Request $request)
+    {
+        $cartItems = json_decode($request->cartItems);
+
+        session()->put('cartItems', $cartItems);
+
+        return session()->get('cartItems');
     }
 }
