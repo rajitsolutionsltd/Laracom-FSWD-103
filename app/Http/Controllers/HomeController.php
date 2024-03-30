@@ -33,10 +33,24 @@ class HomeController extends Controller
 
     public function processCheckout(Request $request)
     {
-        $cartItems = json_decode($request->cartItems);
+        $response = [];
+        if (Auth::check()) {
+            $response = [
+                'redirect_url' => route('billing-details'),
+                'success' => true
+            ];
 
-        session()->put('cartItems', $cartItems);
+            $cartItems = json_decode($request->cartItems);
 
-        return session()->get('cartItems');
+            session()->put('cartItems', $cartItems);
+        } else {
+            $response = [
+                'redirect_url' => route('customer.login'),
+                'success' => false
+            ];
+        }
+
+
+        return \response()->json($response);
     }
 }

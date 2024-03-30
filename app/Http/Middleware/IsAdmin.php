@@ -19,7 +19,7 @@ class IsAdmin
         if (Auth::check() && Auth::user()->isAdmin()) {
             return $next($request);
         } else if (Auth::check()) {
-            return redirect()->to('/home');
+            return redirect()->to('/dashboard');
         } else {
             return redirect()->route('customer.login');
         }

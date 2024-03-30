@@ -187,7 +187,7 @@
                 cartItems: JSON.stringify(cartItems)
             },
             success: function(response) {
-                console.log(response);
+                window.location.href = response.redirect_url;
             },
             error: function(xhr, status, error) {}
         });

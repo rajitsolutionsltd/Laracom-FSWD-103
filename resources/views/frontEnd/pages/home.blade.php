@@ -99,6 +99,4 @@
             });
         }
     </script>
-
-    @include('frontEnd.pages.particles.cart_script')
 @endpush

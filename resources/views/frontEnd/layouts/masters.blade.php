@@ -83,6 +83,8 @@
 
     @stack('scripts')
 
+    @include('frontEnd.pages.particles.cart_script')
+
 </body>
 
 </html>

@@ -58,7 +58,3 @@
     </div>
     <!-- SHOPING CART AREA END -->
 @endsection
-
-@push('scripts')
-    @include('frontEnd.pages.particles.cart_script')
-@endpush
