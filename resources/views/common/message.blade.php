@@ -51,4 +51,21 @@
             }
         })
     @endif
+
+    @if (session()->get('error'))
+        Swal.fire({
+            title: '{{ session()->get('error') }}',
+            icon: 'error',
+            toast: true,
+            position: "top-end",
+            animation: true,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+    @endif
 </script>

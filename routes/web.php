@@ -52,3 +52,5 @@ Route::middleware('auth', 'is_admin')->prefix('admin')->name('admin.')->group(fu
 Route::post('quick-product-view/{productId}', [HomeController::class, 'productViewModal']);
 Route::get('checkout', [HomeController::class, 'checkoutView'])->name('checkout');
 Route::post('process-checkout', [HomeController::class, 'processCheckout'])->name('proccess.checkout');
+
+Route::get('order/payment', [HomeController::class, 'paymentIndex'])->name('order.payment');

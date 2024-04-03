@@ -7,6 +7,7 @@ use App\Models\Billing;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
@@ -49,8 +50,12 @@ class CheckoutController extends Controller
             }
 
             DB::commit();
+
+            Session::put('order_id', $order->id);
+            return \redirect()->route('order.payment')->with('success', 'Please Pay to complete your order');
         } catch (\Exception $e) {
             DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

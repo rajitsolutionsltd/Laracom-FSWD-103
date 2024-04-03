@@ -79,11 +79,13 @@
     <!-- All JS Plugins -->
     <script src="{{ asset('frontend_assets/js/plugins.js') }}"></script>
     <!-- Main JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('frontend_assets/js/main.js') }}"></script>
 
     @stack('scripts')
 
     @include('frontEnd.pages.particles.cart_script')
+    @include('common.message')
 
 </body>
 

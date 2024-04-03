@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -52,5 +55,12 @@ class HomeController extends Controller
 
 
         return \response()->json($response);
+    }
+
+    public function paymentIndex()
+    {
+        $order_id = Session::get('order_id');
+        $order = Order::with('orderDetails')->find($order_id);
+        return view('frontEnd.pages.payment', \compact('order'));
     }
 }
