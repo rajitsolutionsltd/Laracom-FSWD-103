@@ -43,7 +43,7 @@
                 <div class="ltn__checkout-single-content-info">
                     <div class="row">
                         <div class="col-2">
-                            <a href="">
+                            <a href="{{ url('bkash/payment') }}">
                                 <div class="card">
                                     <div class="card-body">
                                         <img src="https://www.logo.wine/a/logo/BKash/BKash-bKash-Logo.wine.svg" alt="">
