@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\BkashPaymentController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,10 +39,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/my-orders', [OrderController::class, 'myOrderIndex'])->name('my-orders');
+    Route::get('/show-order/{id}', [OrderController::class, 'showOrder'])->name('show-order');
 });
 
 require __DIR__ . '/auth.php';
 
+// route for admin
 Route::middleware('auth', 'is_admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('backEnd.layouts.masters');
@@ -48,6 +54,11 @@ Route::middleware('auth', 'is_admin')->prefix('admin')->name('admin.')->group(fu
 
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
+    Route::post('product-datasource', [ProductController::class, 'datasource'])->name('product-datasource');
+    Route::resource('order', AdminOrderController::class);
+    Route::post('order-accept', [AdminOrderController::class, 'acceptOrder'])->name('order.accept');
+    Route::get('order-search', [AdminOrderController::class, 'search'])->name('order.search');
+    Route::get('view-invoice', [AdminOrderController::class, 'viewInvoice'])->name('order.invoice');
 });
 
 Route::post('quick-product-view/{productId}', [HomeController::class, 'productViewModal']);
@@ -61,9 +72,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Payment Routes for bKash
     Route::get('/bkash/payment', [BkashPaymentController::class, 'index']);
-    Route::post('/bkash/get-token', [BkashPaymentController::class, 'getToken'])->name('bkash-get-token');
-    Route::post('/bkash/create-payment', [BkashPaymentController::class, 'createPayment'])->name('bkash-create-payment');
-    Route::post('/bkash/execute-payment', [BkashPaymentController::class, 'executePayment'])->name('bkash-execute-payment');
-    Route::get('/bkash/query-payment', [BkashPaymentController::class, 'queryPayment'])->name('bkash-query-payment');
-    Route::post('/bkash/success', [BkashPaymentController::class, 'bkashSuccess'])->name('bkash-success');
+    Route::get('/bkash/create-payment', [BkashPaymentController::class, 'createPayment'])->name('bkash-create-payment');
+    Route::get('/bkash/callback', [BkashPaymentController::class, 'callBack'])->name('bkash-callBack');
 });

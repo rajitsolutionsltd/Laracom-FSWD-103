@@ -48,3 +48,44 @@ function fileDelete()
         }
     }
 }
+
+function getPaymentStatus($paymentStatus)
+{
+    $status = [
+        'Pending' => '<span class="bg-danger badge">Pending</span>',
+        'Paid' => '<span class="bg-success badge">Paid</span>',
+    ];
+
+    return $status[$paymentStatus];
+}
+
+function getPaymentOptions()
+{
+    return $status = [
+        'Pending',
+        'Paid',
+    ];
+}
+
+function getDeliveryStatus($deliveryStatus)
+{
+    $status = [
+        'Pending' => '<span class="bg-warning badge">Pending</span>',
+        'Processing' => '<span class="bg-info badge">Processing</span>',
+        'Delivered' => '<span class="bg-success badge">Delivered</span>',
+        'Cancelled' => '<span class="bg-danger badge">Cancelled</span>',
+    ];
+
+    return $status[$deliveryStatus];
+}
+
+function getDeliveryOptions()
+{
+    $status = [
+        'Pending',
+        'Processing',
+        'Delivered',
+        'Cancelled'
+    ];
+    return $status;
+}

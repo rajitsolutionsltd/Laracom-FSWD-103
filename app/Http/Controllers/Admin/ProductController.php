@@ -7,6 +7,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -15,8 +17,38 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
-        return view('backEnd.pages.product.index', \compact('products'));
+        return view('backEnd.pages.product.index');
+    }
+
+    public function datasource(Request $request)
+    {
+        $model = Product::where(function ($query) use ($request) {
+            $created_at = $request->date;
+            $created_at = explode(' to ', $created_at);
+            if (!empty($created_at) && \count($created_at) > 1) {
+                $query->whereDate('created_at', '>=', $created_at[0]);
+                $query->whereDate('created_at', '<=', $created_at[1]);
+            } elseif (!empty($created_at) && $created_at[0] != '') {
+                $query->whereDate('created_at', $created_at[0]);
+            }
+        });
+
+        return DataTables::of($model)
+            ->editColumn('category_id', function ($product) {
+                return $product->category->name;
+            })
+            ->editColumn('created_at', function ($product) {
+                return date('Y-m-d', strtotime($product->created_at));
+            })
+            ->editColumn('actions', 'backEnd.pages.product.action_buttons')
+            ->editColumn('image', function ($product) {
+                $image = asset($product->image ? Storage::url($product->image) : 'assets/img/no-product-image.png');
+                $html = "<img width='100' class='img-fluid' src='$image'>";
+                return $html;
+            })
+            ->escapeColumns(['actions'])
+            ->rawColumns(['actions'])
+            ->toJson();
     }
 
     /**

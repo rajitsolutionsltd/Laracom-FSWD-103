@@ -24,5 +24,7 @@
 <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 
 @stack('styles')

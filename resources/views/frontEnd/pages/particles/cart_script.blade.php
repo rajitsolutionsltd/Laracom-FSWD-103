@@ -193,3 +193,10 @@
         });
     }
 </script>
+
+
+@if(session()->get('clear_cart'))
+    <script>
+        localStorage.setItem('cartItems', []);
+    </script>
+@endif

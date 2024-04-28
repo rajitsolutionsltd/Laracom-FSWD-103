@@ -55,7 +55,11 @@
 
         <div class="ltn__utilize-overlay"></div>
 
-        @yield('content')
+        @auth
+            @include('frontEnd.inc.content')
+        @else
+            @yield('content')
+        @endauth
         <!-- MODAL AREA START -->
         @include('frontEnd.inc.whitelist_modal')
         <!-- MODAL AREA END -->

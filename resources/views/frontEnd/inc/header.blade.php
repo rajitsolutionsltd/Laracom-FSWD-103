@@ -48,10 +48,24 @@
                             <li>
                                 <a href="#"><i class="icon-user"></i></a>
                                 <ul>
-                                    <li><a href="{{ route('customer.login') }}">Sign in</a></li>
-                                    <li><a href="register.html">Register</a></li>
-                                    <li><a href="account.html">My Account</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                    @auth
+                                        <li><a href="account.html">My Account</a></li>
+
+                                        <li>
+                                            <a href="{{ route('customer.logout') }}" onclick="
+                                            event.preventDefault();
+                                            document.getElementById('logout').submit();
+                                            ">Logout</a>
+                                        </li>
+
+                                        <form action="{{ route('customer.logout') }}" method="post" id="logout" class="d-none">
+                                            @csrf
+                                        </form>
+                                    @else
+                                        <li><a href="{{ route('customer.login') }}">Sign in</a></li>
+                                        <li><a href="register.html">Register</a></li>
+                                    @endauth
+
                                 </ul>
                             </li>
                         </ul>

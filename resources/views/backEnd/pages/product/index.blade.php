@@ -11,7 +11,16 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-hover table-striped">
+                <div class="row d-flex-justify-content-center mt-3">
+                    <div class="col-auto">
+                        <input name="order_date" type="text" value="{{request()->order_date}}" class="daterangepickr form-control" placeholder="--Select Date--" id="date">
+                    </div>
+
+                    <div class="col-auto">
+                        <button id="searchProduct" class="btn btn-info">Search</button>
+                    </div>
+                </div>
+                <table class="table table-hover table-striped" id="productTable">
                     <thead>
                         <tr>
                             <th>#ID</th>
@@ -24,46 +33,42 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-
-                    <tbody>
-                        @foreach ($products as $product)
-                            <tr>
-                                <td>{{ $product->id }}</td>
-                                <td>{{ $product->category->name }}</td>
-                                <td>
-                                    <img width="100" class="img-fluid"
-                                        src="{{ asset($product->image ? Storage::url($product->image) : 'assets/img/no-product-image.png') }}">
-                                </td>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->stock_quantity }}</td>
-                                <td>{{ $product->created_at }}</td>
-
-                                <td>
-                                    <div class="actions">
-                                        <a href="{{ route('admin.product.edit', $product->id) }}"
-                                            class="btn btn-info">Edit</a>
-                                        <a href="#" class="btn btn-danger"
-                                            onclick="
-                                        event.preventDefault();
-                                        document.getElementById('delete-product-{{ $product->id }}').submit();
-                                        ">Delete</a>
-
-                                        <form action="{{ route('admin.product.destroy', $product->id) }}" method="post"
-                                            id="delete-product-{{ $product->id }}">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                    </tbody>
                 </table>
-
-                {!! $products->links() !!}
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready( function () {
+            datatable = $('#productTable').DataTable({
+                ajax: {
+                    url: '{{ route("admin.product-datasource") }}',
+                    type: 'POST',
+                    data: function(data){
+                        data._token = '{{ csrf_token() }}',
+                        data.date = $('#date').val()
+                    }
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'category_id' },
+                    { data: 'image' },
+                    { data: 'name' },
+                    { data: 'price' },
+                    { data: 'stock_quantity' },
+                    { data: 'created_at' },
+                    { data: 'actions', searchable: false, orderable: false}
+                ],
+                processing: true,
+                serverSide: true,
+                pageLength: 10
+            });
+        } );
+
+        $(document).on('click', '#searchProduct', function(e){
+            datatable.draw();
+        });
+    </script>
+@endpush
